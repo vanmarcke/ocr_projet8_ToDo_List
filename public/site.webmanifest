@@ -1,0 +1,17 @@
+{
+  "lang": "fr-FR",
+  "name": "ToDolist",
+  "short_name": "ToDolist",
+  "description": "Enhance an existing ToDo & Co app",
+  "start_url": "/https://vmkdev.com",
+  "orientation": "landscape",
+  "display": "fullscreen",
+  "background_color": "#2196f3",
+  "theme_color": "#2196f3",
+  "icons": [
+    {
+      "src": "https://vmkdev.com/images/logo_small.png",
+      "sizes": "192x192"
+    }
+  ]
+}
