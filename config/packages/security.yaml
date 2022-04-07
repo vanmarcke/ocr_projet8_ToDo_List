@@ -5,14 +5,27 @@ security:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-        users_in_memory: { memory: null }
+        doctrine:
+            entity:
+                class: App:User
+                property: username
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
         main:
             lazy: true
-            provider: users_in_memory
+            pattern: ^/
+            form_login:
+                login_path: login
+                check_path: login
+                always_use_default_target_path:  true
+                default_target_path:  /
+            logout: 
+                path: logout
+            switch_user: true
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -25,10 +38,7 @@ security:
     access_control:
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/users, roles: ROLE_ADMIN }
-        #  laissé en commentaire en attendant l'implémentation pour le login 
-        # (il faudra decommenter la ligne 30 et supprimer la ligne 31 et les comm.) 
-        # - { path: ^/, roles: ROLE_USER }
-        - { path: ^/, roles: PUBLIC_ACCESS }
+        - { path: ^/, roles: ROLE_USER }
 
     role_hierarchy:
         ROLE_ADMIN:
