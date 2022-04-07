@@ -13,8 +13,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-#[UniqueEntity('email')]
-#[UniqueEntity('username')]
+#[UniqueEntity('email', message: 'Cet email existe déjà.')]
+#[UniqueEntity('username', message: 'Ce nom d\'utilisateur existe déjà.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -22,12 +22,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 25, unique:true)]
-    #[Assert\NotBlank(message:'Vous devez saisir un nom d\'utilisateur max 25 caractères.')]
+    #[ORM\Column(type: 'string', length: 25, unique: true)]
+    #[Assert\Length(
+        max: 25,
+        maxMessage : 'Le nom d\'utilisateur ne peut pas dépasser {{ limit }} caractères',        
+        )]
+    #[Assert\NotBlank(message: 'Vous devez saisir un nom d\'utilisateur max 25 caractères.')]
     private $username;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Assert\Length(min:"6", max:"30")]
+    #[Assert\Length(
+        min: 6,
+        max: 30,
+        minMessage : 'Le mot de passe doit comporter au moins {{ limit }} caractères',
+        maxMessage : 'Le mot de passe ne peut pas dépasser {{ limit }} caractères',
+    )]
     private $password;
 
     #[ORM\Column(type: 'string', length: 60, unique: true)]
@@ -35,7 +44,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Email(message: 'Le format de l\'adresse n\'est pas correct.')]
     private $email;
 
-    #[ORM\OneToMany(targetEntity:Task::class, mappedBy:"author")]
+    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'author')]
     private $tasks;
 
     #[ORM\Column(type: 'json')]
@@ -147,5 +156,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
 }
