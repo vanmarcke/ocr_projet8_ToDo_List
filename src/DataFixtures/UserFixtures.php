@@ -9,11 +9,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture
 {
-    private $encoder;
-
-    public function __construct(UserPasswordHasherInterface $encoder)
+    public function __construct(private UserPasswordHasherInterface $encoder)
     {
-        $this->encoder = $encoder;
     }
 
     /**
@@ -23,7 +20,15 @@ class UserFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-        for ($i = 1; $i <= 10; ++$i) {
+        $admin = new User();
+        $admin->setEmail('admin@gmail.com')
+            ->setUsername('admin')
+            ->setPassword($this->encoder->hashPassword($admin, '123456'))
+            ->setRoles(['ROLE_ADMIN']);
+
+        $manager->persist($admin);
+
+        for ($i = 1; $i <= 5; ++$i) {
             $user = new User();
             $user->setEmail('user'.$i.'@gmail.com')
                 ->setUsername('user'.$i)
@@ -31,14 +36,6 @@ class UserFixtures extends Fixture
 
             $manager->persist($user);
         }
-
-        $admin = new User();
-        $admin->setEmail('admin@gmail.com')
-            ->setUsername('admin')
-            ->setPassword($this->encoder->hashPassword($user, '123456'))
-            ->setRoles(['ROLE_ADMIN']);
-
-        $manager->persist($admin);
 
         $manager->flush();
     }
