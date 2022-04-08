@@ -21,11 +21,14 @@ security:
             # switch_user: true
 
     # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
+    # Note: Only the *first* access control that matches will be used PUBLIC_ACCESS
     access_control:
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/users, roles: ROLE_ADMIN }
-        - { path: ^/, roles: ROLE_USER }
+        #  laissé en commentaire en attendant l'implémentation pour le login 
+        # (il faudra decommenter la ligne 30 et supprimer la ligne 31 et les comm.) 
+        # - { path: ^/, roles: ROLE_USER }
+        - { path: ^/, roles: PUBLIC_ACCESS }
 
     role_hierarchy:
         ROLE_ADMIN:
