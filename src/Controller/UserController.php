@@ -28,12 +28,14 @@ class UserController extends AbstractController
     #[Route('/users/create', name: 'user_create')]
     public function createAction(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->userManager->manageCreateOrUpdate($user);
+            $this->userManager->manageCreateUser($user);
             $this->addFlash('success', "L'utilisateur a été ajouté.");
 
             return $this->redirectToRoute('user_list');
@@ -47,14 +49,16 @@ class UserController extends AbstractController
     #[Route('/users/{id}/edit', name: 'user_edit')]
     public function editAction(User $user, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        
         $form = $this->createForm(UserType::class, $user, [
-            'require_password' => false, 
+            'require_password' => true, 
         ]);
         $password = $user->getPassword();
         $form->handleRequest($request); 
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->userManager->manageCreateOrUpdate($user, false, $password);
+            $this->userManager->manageUpdateUser($user, false, $password);
             $this->addFlash('success', "L'utilisateur a été modifié");
 
             return $this->redirectToRoute('user_list');

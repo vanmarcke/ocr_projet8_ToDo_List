@@ -24,12 +24,28 @@ class UserManager implements UserManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function manageCreateOrUpdate(User $user, bool $persist = true, string $password = null): void
+    public function manageCreateUser(User $user, ?string $password = null): void
+    {
+        $password = $this->encoder->hashPassword($user, $user->getPassword());
+
+        $user->setPassword($password);
+
+        $this->entityManager->persist($user);
+
+        $this->entityManager->flush();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function manageUpdateUser(User $user, bool $persist = true, ?string $password = null): void
     {
         if (null !== $user->getPassword()) {
             $password = $this->encoder->hashPassword($user, $user->getPassword());
-        } 
+            $user->setPassword($password);
+        }
         $user->setPassword($password);
+
         if ($persist) {
             $this->entityManager->persist($user);
         }
