@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Task;
+use App\Form\TaskType;
 use App\Manager\TaskManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -34,5 +37,22 @@ class TaskController extends AbstractController
                 'type' => 'done',
             ]
         );
+    }
+
+    #[Route('/tasks/create', name: 'task_create')]
+    public function createAction(Request $request): Response
+    {
+        $task = new Task();
+        $form = $this->createForm(TaskType::class, $task);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->taskManager->manageCreateTask($task);
+            $this->addFlash('success', 'La tâche a été bien été ajoutée.');
+
+            return $this->redirectToRoute('task_todo_list');
+        }
+
+        return $this->render('task/create.html.twig', ['form' => $form->createView()]);
     }
 }

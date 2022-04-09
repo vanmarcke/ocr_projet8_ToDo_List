@@ -2,6 +2,8 @@
 
 namespace App\Manager;
 
+use App\Entity\Task;
+
 interface TaskManagerInterface
 {
     /**
@@ -17,4 +19,11 @@ interface TaskManagerInterface
      * @return array returns the list of done tasks
      */
     public function showListActionIsDone(): array;
+
+    /**
+     * Manage task creation.
+     *
+     * @param Task $task
+     */
+    public function manageCreateTask(Task $task = null): void;
 }
