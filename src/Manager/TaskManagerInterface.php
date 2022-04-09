@@ -26,4 +26,11 @@ interface TaskManagerInterface
      * @param Task $task
      */
     public function manageCreateTask(Task $task = null): void;
+
+    /**
+     * Manage task edit.
+     *
+     * @param Task $task
+     */
+    public function manageEditTask(Task $task = null): void;
 }

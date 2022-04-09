@@ -35,7 +35,7 @@
 							{% endif %}
 						</h4>
 						<h4>
-							<a href="">{{ task.title }}</a>
+							<a href="{{ path('task_edit', {'id' : task.id }) }}">{{ task.title }}</a>
 						</h4>
 						<h6>Auteur:
 							{% if task.author %}
