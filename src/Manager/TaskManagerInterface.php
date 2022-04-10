@@ -11,14 +11,14 @@ interface TaskManagerInterface
      *
      * @return array returns the to-do list
      */
-    public function showListActionToDo(): array;
+    public function showListActionToDo(bool $isDone = false): array;
 
     /**
      * Manage the recovery of tasks done.
      *
      * @return array returns the list of done tasks
      */
-    public function showListActionIsDone(): array;
+    public function showListActionIsDone(bool $isDone = true): array;
 
     /**
      * Manage task creation.
@@ -33,4 +33,11 @@ interface TaskManagerInterface
      * @param Task $task
      */
     public function manageEditTask(Task $task = null): void;
+
+    /**
+     * Handle task status modification.
+     *
+     * @return Task $task
+     */
+    public function manageToggleAction(Task $task): Task;
 }

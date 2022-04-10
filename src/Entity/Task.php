@@ -18,24 +18,25 @@ class Task
     private $createdAt;
 
     #[ORM\Column(type: 'string', length: 100)]
-    #[Assert\NotBlank(message:'Le champs titre ne peut être vide.')]
-    #[Assert\NotNull(message:'Vous devez saisir un titre max 100 caractères.')]
+    #[Assert\NotBlank(message: 'Le champs titre ne peut être vide.')]
+    #[Assert\NotNull(message: 'Vous devez saisir un titre max 100 caractères.')]
     private $title;
 
     #[ORM\Column(type: 'text')]
-    #[Assert\NotBlank(message:'Le champs contenu ne peut être vide.')]
-    #[Assert\NotNull(message:'Vous devez saisir du contenu.')]
+    #[Assert\NotBlank(message: 'Le champs contenu ne peut être vide.')]
+    #[Assert\NotNull(message: 'Vous devez saisir du contenu.')]
     private $content;
 
     #[ORM\Column(type: 'boolean')]
-    private $IsDone;
+    private $isDone;
 
-    #[ORM\ManyToOne(targetEntity:User::class, inversedBy:'tasks')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'tasks')]
     private $author;
 
     public function __construct()
     {
-        $this->createdAt = new \Datetime();
+        $this->createdAt = new \DateTime();
+        $this->isDone = false;
     }
 
     public function getId(): ?int
@@ -81,14 +82,24 @@ class Task
 
     public function getIsDone(): ?bool
     {
-        return $this->IsDone;
+        return $this->isDone;
     }
 
-    public function setIsDone(bool $IsDone): self
+    public function setIsDone(bool $isDone): self
     {
-        $this->IsDone = $IsDone;
+        $this->isDone = $isDone;
 
         return $this;
+    }
+
+    public function isDone()
+    {
+        return $this->isDone;
+    }
+
+    public function toggle($flag)
+    {
+        $this->isDone = $flag;
     }
 
     public function getAuthor()

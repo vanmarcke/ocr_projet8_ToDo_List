@@ -16,17 +16,17 @@ class TaskManager implements TaskManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function showListActionToDo(): array
+    public function showListActionToDo(bool $isDone = false): array
     {
-        return $this->taskRepository->findBy(['IsDone' => false]);
+        return $this->taskRepository->findBy(['isDone' => $isDone]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function showListActionIsDone(): array
+    public function showListActionIsDone(bool $isDone = true): array
     {
-        return $this->taskRepository->findBy(['IsDone' => true]);
+        return $this->taskRepository->findBy(['isDone' => $isDone]);
     }
 
     /**
@@ -35,8 +35,7 @@ class TaskManager implements TaskManagerInterface
     public function manageCreateTask(Task $task = null): void
     {
         if (null !== $task) {
-            $task->setAuthor($this->security->getUser())
-                ->setIsDone(false);
+            $task->setAuthor($this->security->getUser());
             $this->entityManager->persist($task);
         }
         $this->entityManager->flush();
@@ -52,5 +51,16 @@ class TaskManager implements TaskManagerInterface
             $this->entityManager->persist($task);
         }
         $this->entityManager->flush();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function manageToggleAction(Task $task): Task
+    {
+        $task->toggle(!$task->isDone());
+        $this->entityManager->flush();
+
+        return $task;
     }
 }

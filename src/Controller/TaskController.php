@@ -75,4 +75,14 @@ class TaskController extends AbstractController
             'task' => $task,
         ]);
     }
+
+    #[Route('/tasks/{id}/toggle', name: 'task_toggle')]
+    public function toggleTaskAction(Task $task): Response
+    {
+        $task = $this->taskManager->manageToggleAction($task);
+        $status = (true === $task->isDone()) ? 'faite.' : 'non terminée.';
+        $this->addFlash('success', sprintf('La tâche : %s , a bien été marquée comme ' . $status, $task->getTitle()));
+
+        return $this->redirectToRoute('task_todo_list');
+    }
 }
