@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Task;
 use App\Form\TaskType;
 use App\Manager\TaskManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -82,6 +83,16 @@ class TaskController extends AbstractController
         $task = $this->taskManager->manageToggleAction($task);
         $status = (true === $task->isDone()) ? 'faite.' : 'non terminée.';
         $this->addFlash('success', sprintf('La tâche : %s , a bien été marquée comme ' . $status, $task->getTitle()));
+
+        return $this->redirectToRoute('task_todo_list');
+    }
+
+    #[Route('/tasks/{id}/delete', name: 'task_delete')]
+    #[IsGranted("TASK_DELETE", subject:"task", statusCode:401)]
+    public function deleteTaskAction(Task $task): Response
+    {
+        $this->taskManager->manageDeleteAction($task);
+        $this->addFlash('success', 'La tâche a bien été supprimée.');
 
         return $this->redirectToRoute('task_todo_list');
     }

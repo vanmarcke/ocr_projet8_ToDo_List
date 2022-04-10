@@ -35,9 +35,14 @@ interface TaskManagerInterface
     public function manageEditTask(Task $task = null): void;
 
     /**
-     * Handle task status modification.
+     * Manage task status modification.
      *
      * @return Task $task
      */
     public function manageToggleAction(Task $task): Task;
+
+    /**
+     * Method manageDeleteAction.
+     */
+    public function manageDeleteAction(Task $task): void;
 }

@@ -63,4 +63,13 @@ class TaskManager implements TaskManagerInterface
 
         return $task;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function manageDeleteAction(Task $task): void
+    {
+        $this->entityManager->remove($task);
+        $this->entityManager->flush();
+    }
 }
