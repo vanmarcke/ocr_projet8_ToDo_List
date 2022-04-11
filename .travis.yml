@@ -1,15 +1,8 @@
 language: php
-sudo: false
 php:
-  - "8.1"
-
-services:
-  - mysql
-
-install:
-  - composer install
-  - php bin/console doctrine:database:create --env=test
-  - php bin/console doctrine:schema:update --force --env=test
+  - '7.0'
+  - '7.1'
 
 script:
-  - php bin/phpunit
+   - composer install
+   - php bin/phpunit
