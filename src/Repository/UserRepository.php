@@ -45,6 +45,25 @@ class UserRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * Method save.
+     *
+     * @param $user Save and push user
+     */
+    public function save($user): void
+    {
+        $this->_em->persist($user);
+        $this->_em->flush();
+    }
+
+    /**
+     * Method update Push the user.
+     */
+    public function update(): void
+    {
+        $this->_em->flush();
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

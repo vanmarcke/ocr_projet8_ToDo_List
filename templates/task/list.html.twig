@@ -19,7 +19,7 @@
 			<a href="{{ path('task_done_list') }}" class="btn btn-secondary pull-right">Consulter la liste des tâches terminées</a>
 		{% endif %}
 
-		<a href="" class="btn btn-info pull-right btn-create">Créer une tâche</a>
+		<a href="{{ path('task_create') }}" class="btn btn-info pull-right btn-create">Créer une tâche</a>
 	</div>
 
 	<div class="row">
@@ -35,7 +35,7 @@
 							{% endif %}
 						</h4>
 						<h4>
-							<a href="">{{ task.title }}</a>
+							<a href="{{ path('task_edit', {'id' : task.id }) }}">{{ task.title }}</a>
 						</h4>
 						<h6>Auteur:
 							{% if task.author %}
@@ -46,14 +46,14 @@
 
 					</div>
 					<div>
-						<form action="">
+						<form action="{{ path('task_toggle', {'id' : task.id }) }}">
 							<button class="btn btn-success btn-sm pull-right">
 								{% if not task.isDone %}Marquer comme faite{% else %}Marquer non terminée
 								{% endif %}
 							</button>
 						</form>
-						<form action="">
-							<button class="btn btn-danger btn-sm pull-right">Supprimer</button>
+						<form action="{{ path('task_delete', {'id' : task.id }) }}">
+							<button class="btn btn-danger btn-sm pull-right" {% if not is_granted('TASK_DELETE', task) %} disabled {% endif %}>Supprimer</button>
 						</form>
 					</div>
 				</div>

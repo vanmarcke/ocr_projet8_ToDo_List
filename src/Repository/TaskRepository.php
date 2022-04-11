@@ -45,6 +45,36 @@ class TaskRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * Method save.
+     *
+     * @param $task Save and push task
+     */
+    public function save($task): void
+    {
+        $this->_em->persist($task);
+        $this->_em->flush();
+    }
+
+    /**
+     * Update the task or toggle.
+     */
+    public function update(): void
+    {
+        $this->_em->flush();
+    }
+
+    /**
+     * Delete task.
+     *
+     * @param $task delete task
+     */
+    public function delete($task): void
+    {
+        $this->_em->remove($task);
+        $this->_em->flush();
+    }
+
     // /**
     //  * @return Task[] Returns an array of Task objects
     //  */
