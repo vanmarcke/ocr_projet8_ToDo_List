@@ -4,12 +4,11 @@ namespace App\Manager;
 
 use App\Entity\Task;
 use App\Repository\TaskRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
 
 class TaskManager implements TaskManagerInterface
 {
-    public function __construct(private TaskRepository $taskRepository, private EntityManagerInterface $entityManager, private Security $security)
+    public function __construct(private TaskRepository $taskRepository, private Security $security)
     {
     }
 
@@ -36,9 +35,8 @@ class TaskManager implements TaskManagerInterface
     {
         if (null !== $task) {
             $task->setAuthor($this->security->getUser());
-            $this->entityManager->persist($task);
         }
-        $this->entityManager->flush();
+        $this->taskRepository->save($task);
     }
 
     /**
@@ -48,9 +46,8 @@ class TaskManager implements TaskManagerInterface
     {
         if (null !== $task) {
             $task->setAuthor($this->security->getUser());
-            $this->entityManager->persist($task);
         }
-        $this->entityManager->flush();
+        $this->taskRepository->update($task);
     }
 
     /**
@@ -59,7 +56,7 @@ class TaskManager implements TaskManagerInterface
     public function manageToggleAction(Task $task): Task
     {
         $task->toggle(!$task->isDone());
-        $this->entityManager->flush();
+        $this->taskRepository->update($task);
 
         return $task;
     }
@@ -69,7 +66,6 @@ class TaskManager implements TaskManagerInterface
      */
     public function manageDeleteAction(Task $task): void
     {
-        $this->entityManager->remove($task);
-        $this->entityManager->flush();
+        $this->taskRepository->delete($task);
     }
 }
