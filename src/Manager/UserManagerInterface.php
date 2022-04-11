@@ -28,5 +28,5 @@ interface UserManagerInterface
      * @param bool        $persist  save the User if true
      * @param string|null $password contains PasswordHasher
      */
-    public function manageUpdateUser(User $user, ?string $password = null): void;
+    public function manageUpdateUser(User $user, bool $persist = true, ?string $password = null): void;
 }
