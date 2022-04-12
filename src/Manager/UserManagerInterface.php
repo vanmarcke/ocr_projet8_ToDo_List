@@ -25,7 +25,6 @@ interface UserManagerInterface
      * Handle user creation or edition in database.
      *
      * @param User        $user     contains user information
-     * @param bool        $persist  save the User if true
      * @param string|null $password contains PasswordHasher
      */
     public function manageUpdateUser(User $user, ?string $password = null): void;
