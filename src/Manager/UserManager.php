@@ -35,7 +35,7 @@ class UserManager implements UserManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function manageUpdateUser(User $user, bool $persist = true, ?string $password = null): void
+    public function manageUpdateUser(User $user, ?string $password = null): void
     {
         if (null !== $user->getPassword()) {
             $password = $this->encoder->hashPassword($user, $user->getPassword());
