@@ -4,62 +4,9 @@ namespace App\Tests\Controller;
 
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpFoundation\Response;
 
 class UserControllerTest extends WebTestCase
 {
-    /**
-     * Test denied access to user management pages for an authenticated user with a role_user.
-     */
-    public function testAccessPageAccessAuthenticatedUser()
-    {
-        $routes = [
-            ['GET', '/users'],
-            ['GET', '/users/1/edit'],
-            ['GET', '/users/create'],
-        ];
-
-        $client = static::createClient();
-        $userRepository = static::getContainer()->get(UserRepository::class);
-
-        // retrieve the test user
-        $testUser = $userRepository->findOneByEmail('user1@gmail.com');
-
-        // simulate $testUser being logged in
-        $client->loginUser($testUser);
-
-        foreach ($routes as $route) {
-            $client->request($route[0], $route[1]);
-            $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
-        }
-    }
-
-    /**
-     * Test access to user management pages for an authenticated user with role_admin.
-     */
-    public function testAccessPageAccessAuthenticatedAdmin()
-    {
-        $routes = [
-            ['GET', '/users'],
-            ['GET', '/users/1/edit'],
-            ['GET', '/users/create'],
-        ];
-
-        $client = static::createClient();
-        $userRepository = static::getContainer()->get(UserRepository::class);
-
-        // retrieve the test user
-        $testUser = $userRepository->findOneByEmail('admin@gmail.com');
-
-        // simulate $testUser being logged in
-        $client->loginUser($testUser);
-
-        foreach ($routes as $route) {
-            $client->request($route[0], $route[1]);
-            $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-        }
-    }
-
     /**
      * Test User list page integration for an authenticated user.
      */
@@ -237,23 +184,5 @@ class UserControllerTest extends WebTestCase
 
         $this->assertSame(1, $crawler->filter('h1:contains("Modifier")')->count());
         $this->assertSame(1, $crawler->filter('span:contains("Ce nom d\'utilisateur existe déjà.")')->count());
-    }
-
-    /**
-     * Test the 404 error response when performing an action with a resource that does not exist.
-     */
-    public function testUserActionDoesNotExist()
-    {
-        $client = static::createClient();
-        $userRepository = static::getContainer()->get(UserRepository::class);
-
-        // retrieve the test user
-        $testUser = $userRepository->findOneByEmail('admin@gmail.com');
-
-        // simulate $testUser being logged in
-        $client->loginUser($testUser);
-
-        $client->request('GET', '/users/20/edit');
-        $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
     }
 }
