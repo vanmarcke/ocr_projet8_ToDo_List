@@ -44,9 +44,6 @@ class TaskManager implements TaskManagerInterface
      */
     public function manageEditTask(Task $task = null): void
     {
-        if (null !== $task) {
-            $task->setAuthor($this->security->getUser());
-        }
         $this->taskRepository->update($task);
     }
 
