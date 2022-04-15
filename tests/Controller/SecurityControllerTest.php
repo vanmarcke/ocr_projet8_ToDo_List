@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 class SecurityControllerTest extends WebTestCase
 {
     /**
-     * Test that the HTTP response was successful and that the request body contains the requested items
+     * Test that the HTTP response was successful and that the request body contains the requested items.
      */
     public function testRequestBodyContains(): void
     {
