@@ -12,6 +12,12 @@ class SecurityController extends AbstractController
     #[Route('/login', name: 'login')]
     public function loginAction(AuthenticationUtils $authenticationUtils): Response
     {
+        if ($this->getUser()) {
+            $this->addFlash('error', 'Vous êtes déjà connecté..');
+
+            return $this->redirectToRoute('homepage');
+        }
+
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
