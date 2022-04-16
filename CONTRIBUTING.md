@@ -1,4 +1,4 @@
-# ToDo & Co - Project Contribution Guidelines
+# ToDo&Co - Project Contribution Guidelines
 
 If you wish to contribute to the improvement of this project, your contribution is welcome!
 
