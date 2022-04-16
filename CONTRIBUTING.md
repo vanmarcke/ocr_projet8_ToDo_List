@@ -51,15 +51,7 @@ Unit and functional tests are implemented with PHPunit and automated via the Tra
 - Create your test database environment by running:
 
 ```powershell
-symfony php bin/console doctrine:database:create --env=test
-```
-
-```powershell
-symfony php bin/console doctrine:schema:update --force --env=test
-```
-
-```powershell
-symfony php bin/console --env=test doctrine:fixtures:load -n
+composer run-script install-db-test
 ```
 
 - To run all the tests:
@@ -71,7 +63,13 @@ symfony php bin/phpunit
 - To run specific tests:
 
 ```powershell
-symfony php bin/phpunit --filter name of the test file without the .php
+symfony php bin/phpunit --filter `name of the test file without the .php`
+```
+
+Example:
+
+```powershell
+symfony php bin/phpunit --filter DefaultController
 ```
 
 - To Get code coverage report:
@@ -79,6 +77,8 @@ symfony php bin/phpunit --filter name of the test file without the .php
 ```powershell
 vendor/bin/phpunit --coverage-html web/test-coverage
 ```
+
+Test-coverage will be accessible from the root of the project in the folder: web\test-coverage\index.html
 
 ## Instructions
 
