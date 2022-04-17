@@ -19,6 +19,8 @@ Enhance an existing ToDo&Co app
 ## Code Quality
 
 ![php-cs-fixer](https://img.shields.io/badge/php--cs--fixer-%5E3.8-succes)
+![Dependabot](https://img.shields.io/badge/Dependabot-security%20updates-success)
+![Travis-CI](https://img.shields.io/badge/Travis%20CI-PHP%3A8.1-success)
 
 **SymfonyInsight:**
 
@@ -88,10 +90,10 @@ You are required to provide a code coverage report at the end of the project. Th
 
 ### Prerequisites
 
-- Symfony CLI version v4.28.1
-- PHP version 8.1.1
-- Composer version 2.2.5
-- A Management System (SGBD) type 'phpMyAdmin'
+- [Symfony CLI version v4.28.1](https://symfony.com/download)
+- [PHP version 8.1.1](https://www.php.net/downloads)
+- [Composer version 2.2.5](https://getcomposer.org/download/)
+- [A Management System (SGBD) type 'phpMyAdmin'](https://www.apachefriends.org/fr/index.html)
 
 ### Step 1: Clone your machine's repository to a folder of your choice
 
