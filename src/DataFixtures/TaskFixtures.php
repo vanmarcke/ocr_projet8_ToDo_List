@@ -15,13 +15,13 @@ class TaskFixtures extends Fixture
 
         for ($i = 1; $i <= 10; ++$i) {
             $task = new Task();
-            $task->setTitle('Titre de la tache '.$i)
+            $task->setTitle('Titre de la tache ' . $i)
                 ->setContent($faker->realText($maxNbChars = 200, $indexSize = 2));
-                if ($i > 5) {
-                    $task->setIsDone(false);
-                } else {
-                    $task->setIsDone(true);
-                }
+            if ($i > 5) {
+                $task->setIsDone(false);
+            } else {
+                $task->setIsDone(true);
+            }
 
             $manager->persist($task);
         }

@@ -15,8 +15,6 @@ class UserFixtures extends Fixture
 
     /**
      * Load user fixtures to database.
-     *
-     * @return void
      */
     public function load(ObjectManager $manager)
     {
@@ -30,8 +28,8 @@ class UserFixtures extends Fixture
 
         for ($i = 1; $i <= 5; ++$i) {
             $user = new User();
-            $user->setEmail('user'.$i.'@gmail.com')
-                ->setUsername('user'.$i)
+            $user->setEmail('user' . $i . '@gmail.com')
+                ->setUsername('user' . $i)
                 ->setPassword($this->encoder->hashPassword($user, '123456'));
 
             $manager->persist($user);
