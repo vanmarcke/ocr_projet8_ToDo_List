@@ -88,7 +88,7 @@ class TaskController extends AbstractController
     }
 
     #[Route('/tasks/{id}/delete', name: 'task_delete')]
-    #[IsGranted("TASK_DELETE", subject:"task", statusCode:401)]
+    #[IsGranted('TASK_DELETE', subject: 'task', statusCode: 401)]
     public function deleteTaskAction(Task $task): Response
     {
         $this->taskManager->manageDeleteAction($task);

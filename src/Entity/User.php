@@ -25,8 +25,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 25, unique: true)]
     #[Assert\Length(
         max: 25,
-        maxMessage : 'Le nom d\'utilisateur ne peut pas dépasser {{ limit }} caractères',        
-        )]
+        maxMessage : 'Le nom d\'utilisateur ne peut pas dépasser {{ limit }} caractères',
+    )]
     #[Assert\NotBlank(message: 'Vous devez saisir un nom d\'utilisateur max 25 caractères.')]
     private $username;
 

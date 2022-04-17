@@ -29,7 +29,7 @@ class UserController extends AbstractController
     public function createAction(Request $request): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        
+
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -50,12 +50,12 @@ class UserController extends AbstractController
     public function editAction(User $user, Request $request): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        
+
         $form = $this->createForm(UserType::class, $user, [
-            'require_password' => true, 
+            'require_password' => true,
         ]);
         $password = $user->getPassword();
-        $form->handleRequest($request); 
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->userManager->manageUpdateUser($user, $password);

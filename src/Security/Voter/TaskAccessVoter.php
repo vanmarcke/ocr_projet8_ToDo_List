@@ -56,8 +56,6 @@ class TaskAccessVoter extends Voter
     /**
      * @param Task $task contains task information
      * @param User $user contains user information
-     *
-     * @return bool
      */
     private function canDelete(Task $task, User $user): bool
     {
