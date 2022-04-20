@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block header_title %}
+	<h1 class="alert alert-danger text-center">Une erreur est survenue.</h1>
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+		<a href="{{ path('task_create') }}" class="btn btn-success">Créer une nouvelle tâche</a>
+		<a href="{{ path('task_todo_list') }}" class="btn btn-info">Retourner à la liste des tâches à faire</a>
+		<a href="{{ path('task_done_list') }}" class="btn btn-secondary">Retourner à la liste des tâches terminées</a>
+	</div>
+{% endblock %}
